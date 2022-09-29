@@ -1,0 +1,162 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "trip.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "TripService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/trip/{id}": {
+      "get": {
+        "operationId": "TripService_GetTrip",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/coolcarGetTripResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "TripService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "coolcarGetTripResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "trip": {
+          "$ref": "#/definitions/coolcarTrip"
+        }
+      }
+    },
+    "coolcarTrip": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "string",
+          "title": "开始地点"
+        },
+        "end": {
+          "type": "string",
+          "title": "结束地点"
+        },
+        "durationSec": {
+          "type": "string",
+          "format": "int64",
+          "title": "一共走了多久（秒）"
+        },
+        "feeCent": {
+          "type": "string",
+          "format": "int64",
+          "title": "费用（分）"
+        },
+        "startPos": {
+          "$ref": "#/definitions/qiyue365coolcarLocation",
+          "title": "开始位置"
+        },
+        "endPos": {
+          "$ref": "#/definitions/qiyue365coolcarLocation",
+          "title": "结束位置"
+        },
+        "pathLocations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/qiyue365coolcarLocation"
+          },
+          "title": "途径的位置"
+        },
+        "status": {
+          "$ref": "#/definitions/coolcarTripStatus",
+          "title": "状态"
+        }
+      },
+      "title": "行程"
+    },
+    "coolcarTripStatus": {
+      "type": "string",
+      "enum": [
+        "UNKNOWN",
+        "NOT_STARTED",
+        "IN_PROGRESS",
+        "FINISHED",
+        "PAID"
+      ],
+      "default": "UNKNOWN",
+      "description": "- NOT_STARTED: 未开始\n - IN_PROGRESS: 行程中\n - FINISHED: 结束\n - PAID: 支付",
+      "title": "行程状态"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "qiyue365coolcarLocation": {
+      "type": "object",
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "format": "double",
+          "title": "纬度"
+        },
+        "longitude": {
+          "type": "number",
+          "format": "double",
+          "title": "经度"
+        }
+      },
+      "title": "位置"
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

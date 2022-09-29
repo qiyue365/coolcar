@@ -1,6 +1,7 @@
 syntax = "proto3";
 option go_package = ".;pb";
 package com.github.qiyue365.coolcar;
+import "google/api/annotations.proto";
 
 // 位置
 message Location {
@@ -53,5 +54,9 @@ message GetTripResponse {
 }
 
 service TripService {
-    rpc GetTrip(GetTripRequest) returns (GetTripResponse);
+    rpc GetTrip(GetTripRequest) returns (GetTripResponse){
+        option(google.api.http) = {
+            get: "/trip/{id}"
+        };
+    }
 }
