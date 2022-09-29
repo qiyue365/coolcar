@@ -1,5 +1,13 @@
 GEN_DIR='./pb'
 
+.PHONY: server
+server:
+	@go run cmd/server/main.go
+
+.PHONY: client
+client:
+	@go run cmd/client/main.go
+
 .PHONY: gen
 gen: genclean
 	mkdir -p $(GEN_DIR) && \
