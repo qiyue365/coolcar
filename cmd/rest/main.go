@@ -13,7 +13,14 @@ import (
 
 func main() {
 	ctx := context.Background()
-	mux := runtime.NewServeMux()
+	jsonpbOpt := &runtime.JSONPb{}
+	jsonpbOpt.UseEnumNumbers = true
+	jsonpbOpt.UseProtoNames = true
+	mux := runtime.NewServeMux(
+		runtime.WithMarshalerOption(
+			runtime.MIMEWildcard, jsonpbOpt,
+		),
+	)
 	endpoint := "127.0.0.1:11223"
 	opts := []grpc.DialOption{
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
