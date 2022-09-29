@@ -1,0 +1,44 @@
+syntax = "proto3";
+option go_package = ".;pb";
+package com.github.qiyue365.coolcar;
+
+// 位置
+message Location {
+    // 纬度
+    double latitude = 1;
+    // 经度
+    double longitude = 2;
+}
+
+// 行程状态
+enum TripStatus {
+    UNKNOWN = 0;
+    // 未开始
+    NOT_STARTED = 1;
+    // 行程中
+    IN_PROGRESS = 2;
+    // 结束
+    FINISHED = 3;
+    // 支付
+    PAID = 4;
+}
+
+// 行程
+message Trip {
+    // 开始地点
+    string start = 1;
+    // 结束地点
+    string end = 2;
+    // 一共走了多久（秒）
+    int64 duration_sec = 3;
+    // 费用（分）
+    int64 fee_cent = 4;
+    // 开始位置
+    Location start_pos = 5;
+    // 结束位置
+    Location end_pos = 6;
+    // 途径的位置
+    repeated Location path_locations = 7;
+    // 状态
+    TripStatus status = 8;
+} 
